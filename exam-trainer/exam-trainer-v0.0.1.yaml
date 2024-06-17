@@ -1,0 +1,248 @@
+openapi: "3.0.0"
+info:
+  title: Exam Trainer
+  version: 0.0.1-SNAPSHOT
+
+tags:
+  - Exam
+  - Question
+
+paths:
+  /v1/public/exams:
+    get:
+      tags:
+        - Exam
+      operationId: listExams
+      summary: List exams
+      parameters:
+        - in: query
+          name: pageable
+          required: false
+          schema:
+            $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                type: Page
+    post:
+      tags:
+        - Exam
+      operationId: createExam
+      summary: Create exam
+      requestBody:
+        description: request of createExam
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExamModel'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamModel'
+  /v1/public/exams/{examId}:
+    parameters:
+      - in: path
+        name: examId
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Exam
+      operationId: getExam
+      summary: Get exam
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamModel'
+    put:
+      tags:
+        - Exam
+      operationId: updateExam
+      summary: Update exam
+      requestBody:
+        description: request of updateExam
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExamModel'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamModel'
+  /v1/public/questions:
+    get:
+      tags:
+        - Question
+      operationId: listQuestions
+      summary: List questions
+      parameters:
+        - in: query
+          name: pageable
+          required: false
+          schema:
+            $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                type: Page
+    post:
+      tags:
+        - Question
+      operationId: createQuestion
+      summary: Create question
+      requestBody:
+        description: request of createQuestion
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionModel'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionModel'
+  /v1/public/questions/{questionId}:
+    parameters:
+      - in: path
+        name: questionId
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Question
+      operationId: getQuestion
+      summary: Get question
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionModel'
+    put:
+      tags:
+        - Question
+      operationId: updateQuestion
+      summary: Update question
+      requestBody:
+        description: request of updateQuestion
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionModel'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionModel'
+
+
+components:
+  schemas:
+    ExamType:
+      type: string
+      enum:
+        - AWS
+        - TEXT
+    CandidateModel:
+      allOf:
+        - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
+        - type: object
+          properties:
+            name:
+              type: string
+    ExamModel:
+      allOf:
+        - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
+        - type: object
+          properties:
+            name:
+              type: string
+            examType:
+              $ref: '#/components/schemas/ExamType'
+            candidate:
+              $ref: '#/components/schemas/CandidateModel'
+            startDatetime:
+              type: string
+              format: date-time
+            endDatetime:
+              type: string
+              format: date-time
+            answers:
+              type: array
+              items:
+                $ref: '#/components/schemas/AnswerModel'
+    AnswerModel:
+      allOf:
+        - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
+        - type: object
+          properties:
+            question:
+              $ref: '#/components/schemas/QuestionModel'
+            option:
+              $ref: '#/components/schemas/OptionModel'
+            content:
+              type: string
+    QuestionType:
+      type: string
+      enum:
+        - TEXT
+        - RADIO
+        - CHECKBOX
+        - AWS
+    QuestionModel:
+      allOf:
+        - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
+        - type: object
+          properties:
+            content:
+              type: string
+            questionType:
+              $ref: '#/components/schemas/QuestionType'
+            options:
+              type: array
+              items:
+                $ref: '#/components/schemas/OptionModel'
+    OptionModel:
+      allOf:
+        - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
+        - type: object
+          properties:
+            label:
+              type: string
+            isCorrect:
+              type: boolean
+

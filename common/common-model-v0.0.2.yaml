@@ -1,0 +1,68 @@
+openapi: "3.0.0"
+info:
+  title: Common Model
+  version: 0.0.1-SNAPSHOT
+
+tags:
+
+
+paths:
+
+
+components:
+  # Reference:
+  # https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
+  schemas:
+    # Reference:
+    # https://medium.com/learning-from-jhipster/21-controller-service-repository的建立-2-pageable-sort-的使用與-swagger-的設定-f3dc2a1b772d
+    # Custom Pageable is required to construct PageRequest object in spring, weird
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: pageNumber/page - zero-based page number, must not be negative.
+        size:
+          type: integer
+        sort:
+          type: array
+          items:
+            type: string
+            default: field1,asc
+    BaseAbstractModel:
+      type: object
+      required:
+        - versionNo
+      properties:
+        versionNo:
+          type: integer
+          format: int32
+        createdBy:
+          type: string
+        createdDatetime:
+          type: string
+          format: date-time
+        lastModifiedBy:
+          type: string
+        lastModifiedDatetime:
+          type: string
+          format: date-time
+    BaseIntModel:
+      required:
+        - id
+      allOf:
+        - $ref: '#/components/schemas/BaseAbstractModel'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+    BaseStrModel:
+      required:
+        - id
+      allOf:
+        - $ref: '#/components/schemas/BaseAbstractModel'
+        - type: object
+          properties:
+            id:
+              type: string
