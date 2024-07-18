@@ -1,0 +1,32 @@
+{
+  "JsonDogBig": {
+    "allOf": [
+      {
+        "$ref": "./petstore-pet.json#/JsonDog"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "likeBone": {
+            "type": "boolean"
+          }
+        }
+      }
+    ]
+  },
+  "JsonDogSmallBase": {
+    "allOf": [
+      {
+        "$ref": "./petstore-pet.json#/JsonDog"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "canSwim": {
+            "type": "boolean"
+          }
+        }
+      }
+    ]
+  }
+}

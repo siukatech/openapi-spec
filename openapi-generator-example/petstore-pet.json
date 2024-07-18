@@ -1,0 +1,92 @@
+{
+  "JsonBase": {
+    "type": "object"
+  },
+  "JsonPet": {
+    "type": "object",
+    "allOf": [
+      {
+        "$ref": "#/JsonBase"
+      },
+      {
+        "$ref": "./petstore-v3.0.yaml#/components/schemas/Pet"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "petType": {
+            "type": "string",
+            "enum": [
+              "CAT",
+              "DOG",
+              "DOG_S",
+              "RABBIT"
+            ]
+          }
+        }
+      }
+    ],
+    "required": [
+      "petType"
+    ],
+    "discriminator": {
+      "propertyName": "petType",
+      "mapping": {
+        "CAT": "#/JsonCat",
+        "DOG": "#/JsonDog",
+        "DOG_S": "#/JsonDogSmall",
+        "RABBIT": "#/JsonRabbit"
+      }
+    },
+    "bak_discriminator": {
+      "propertyName": "petType",
+      "mapping": {
+        "DOG": "./petstore-dog.json#/JsonDogBig"
+      }
+    }
+  },
+  "JsonCat": {
+    "allOf": [
+      {
+        "$ref": "#/JsonPet"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "isIndoor": {
+            "type": "boolean"
+          }
+        }
+      }
+    ]
+  },
+  "JsonDog": {
+    "allOf": [
+      {
+        "$ref": "#/JsonPet"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "likeBone": {
+            "type": "boolean"
+          }
+        }
+      }
+    ]
+  },
+  "JsonRabbit": {
+    "allOf": [
+      {
+        "$ref": "#/JsonPet"
+      }
+    ]
+  },
+  "JsonDogSmall": {
+    "allOf": [
+      {
+        "$ref": "./petstore-dog.json#/JsonDogSmallBase"
+      }
+    ]
+  }
+}

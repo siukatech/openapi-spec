@@ -117,3 +117,45 @@ components:
           format: int32
         message:
           type: string
+    YamlPet:
+      allOf:
+        - $ref: "#/components/schemas/Pet"
+        - type: object
+          required:
+            - petType
+          properties:
+            petType:
+              type: string
+              enum:
+                - CAT
+                - DOG
+                - RABBIT
+          discriminator:
+            propertyName: petType
+            mapping:
+              CAT: "#/components/schemas/YamlCat"
+              DOG: "#/components/schemas/YamlDog"
+              RABBIT: "#/components/schemas/YamlRabbit"
+    YamlCat:
+      allOf:
+        - $ref: "#/components/schemas/YamlPet"
+        - type: object
+          properties:
+            isIndoor:
+              type: boolean
+    YamlDog:
+      allOf:
+        - $ref: "#/components/schemas/YamlPet"
+        - type: object
+          properties:
+            likeBone:
+              type: boolean
+    YamlRabbit:
+      allOf:
+        - $ref: "#/components/schemas/YamlPet"
+    JsonPet:
+      $ref: "./petstore-pet.json#/JsonPet"
+    JsonDogBig:
+      $ref: "./petstore-dog.json#/JsonDogBig"
+#      $ref: "./petstore-dog.json#/JsonDogSmall"
+#      $ref: "./petstore-pet.json#/JsonCat"
