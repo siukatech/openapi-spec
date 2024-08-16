@@ -159,6 +159,19 @@ components:
   # inheritance and polymorphism!!!
   # https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
   schemas:
+    ModelType:
+      type: string
+      enum:
+        - MODEL_SIMPLE
+        - MODEL_COMPLEX
+#        - Simple
+#        - Complex
+      x-enum-varnames:
+        - MODEL_SIMPLE
+        - MODEL_COMPLEX
+      x-enum-descriptions:
+        - Simple Model Desc
+        - Complex Model Desc
 #    # Reference:
 #    # https://medium.com/learning-from-jhipster/21-controller-service-repository的建立-2-pageable-sort-的使用與-swagger-的設定-f3dc2a1b772d
 #    Pageable:

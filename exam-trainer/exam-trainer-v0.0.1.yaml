@@ -175,8 +175,8 @@ components:
     ExamType:
       type: string
       enum:
-        - AWS
-        - TEXT
+        - EXAM_TYPE_AWS
+        - EXAM_TYPE_TEXT
     CandidateModel:
       allOf:
         - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'
@@ -219,10 +219,10 @@ components:
     QuestionType:
       type: string
       enum:
-        - TEXT
-        - RADIO
-        - CHECKBOX
-        - AWS
+        - QUESTION_TYPE_TEXT
+        - QUESTION_TYPE_RADIO
+        - QUESTION_TYPE_CHECKBOX
+        - QUESTION_TYPE_AWS
     QuestionModel:
       allOf:
         - $ref: '../common/common-model-v0.0.2.yaml#/components/schemas/BaseStrModel'

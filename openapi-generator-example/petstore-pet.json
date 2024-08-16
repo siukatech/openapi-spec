@@ -1,6 +1,20 @@
 {
   "JsonBase": {
-    "type": "object"
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    }
+  },
+  "JsonPetType": {
+    "type": "string",
+    "enum": [
+      "PET_TYPE_CAT",
+      "PET_TYPE_DOG",
+      "PET_TYPE_DOG_S",
+      "PET_TYPE_RABBIT"
+    ]
   },
   "JsonPet": {
     "type": "object",
@@ -15,13 +29,7 @@
         "type": "object",
         "properties": {
           "petType": {
-            "type": "string",
-            "enum": [
-              "CAT",
-              "DOG",
-              "DOG_S",
-              "RABBIT"
-            ]
+            "$ref": "#/JsonPetType"
           }
         }
       }
@@ -32,16 +40,16 @@
     "discriminator": {
       "propertyName": "petType",
       "mapping": {
-        "CAT": "#/JsonCat",
-        "DOG": "#/JsonDog",
-        "DOG_S": "#/JsonDogSmall",
-        "RABBIT": "#/JsonRabbit"
+        "PET_TYPE_CAT": "#/JsonCat",
+        "PET_TYPE_DOG": "#/JsonDog",
+        "PET_TYPE_DOG_S": "#/JsonDogSmall",
+        "PET_TYPE_RABBIT": "#/JsonRabbit"
       }
     },
     "bak_discriminator": {
       "propertyName": "petType",
       "mapping": {
-        "DOG": "./petstore-dog.json#/JsonDogBig"
+        "PET_TYPE_DOG": "./petstore-dog.json#/JsonDogBig"
       }
     }
   },

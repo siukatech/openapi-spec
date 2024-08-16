@@ -117,6 +117,12 @@ components:
           format: int32
         message:
           type: string
+    PetType:
+      type: string
+      enum:
+        - PET_TYPE_CAT
+        - PET_TYPE_DOG
+        - PET_TYPE_RABBIT
     YamlPet:
       allOf:
         - $ref: "#/components/schemas/Pet"
@@ -125,17 +131,13 @@ components:
             - petType
           properties:
             petType:
-              type: string
-              enum:
-                - CAT
-                - DOG
-                - RABBIT
+              $ref: "#/components/schemas/PetType"
           discriminator:
             propertyName: petType
             mapping:
-              CAT: "#/components/schemas/YamlCat"
-              DOG: "#/components/schemas/YamlDog"
-              RABBIT: "#/components/schemas/YamlRabbit"
+              PET_TYPE_CAT: "#/components/schemas/YamlCat"
+              PET_TYPE_DOG: "#/components/schemas/YamlDog"
+              PET_TYPE_RABBIT: "#/components/schemas/YamlRabbit"
     YamlCat:
       allOf:
         - $ref: "#/components/schemas/YamlPet"
