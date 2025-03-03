@@ -153,6 +153,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DiscPageResult'
+  /v1/public/complex-page-openapi:
+    get:
+      tags:
+        - Complex
+      operationId: paginateComplexOpenapi
+      summary: Pagination API of ComplexModel
+      parameters:
+        - in: query
+          name: pageable
+          required: false
+          schema:
+            $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/Pageable'
+#            type: Pageable
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplexDiscPageResult'
+
 
 components:
   # Reference:
@@ -224,19 +246,22 @@ components:
 #          format: date-time
     PageResult:
       allOf:
-        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageResult'
+#        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageResult'
+        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/PaginationResponse'
         - type: object
           properties:
             content:
               type: array
               items:
                 $ref: '#/components/schemas/DiscPageModel'
+              default: []
     #
     # Set up the discriminator in PageMode to make the returned content list specific, failed.
     # Returned content list is required to re-cast before return.
     DiscPageModel:
       allOf:
-        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageModel'
+#        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageModel'
+        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/PaginationResponse'
 #        - discriminator:
 #            propertyName: pageModelType
 #            mapping:
@@ -303,7 +328,8 @@ components:
     # Set up the discriminator in PageResult to make the returned content list specific.
     DiscPageResult:
       allOf:
-        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageResult'
+#        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/BasePageResult'
+        - $ref: '../common/common-model-v0.0.1.yaml#/components/schemas/PaginationResponse'
 #        - discriminator:
 #            propertyName: pageModelType
 #            mapping:
@@ -318,6 +344,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/SimpleModel'
+              default: []
     ComplexDiscPageResult:
       allOf:
         - $ref: '#/components/schemas/DiscPageResult'
@@ -327,6 +354,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ComplexModel'
+              default: []
 
 
 #  # Reference:

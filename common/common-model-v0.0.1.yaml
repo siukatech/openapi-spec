@@ -14,35 +14,92 @@ components:
   # https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
   schemas:
     # Reference:
-    # https://medium.com/learning-from-jhipster/21-controller-service-repository的建立-2-pageable-sort-的使用與-swagger-的設定-f3dc2a1b772d
-    # Custom Pageable is required to construct PageRequest object in spring, weird
-    Pageable:
-      type: object
-      properties:
-        page:
-          type: integer
-          description: pageNumber/page - zero-based page number, must not be negative.
-        size:
-          type: integer
-        sort:
-          type: array
-          items:
-            type: string
-            default: field1,asc
-    BasePageResult:
+    # https://github.com/OpenAPITools/openapi-generator/issues/14062#issuecomment-1812059919
+    # https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/schemas/PaginationResponse
+    PaginationResponse:
       type: object
       properties:
         totalElements:
           type: integer
-          format: int32
+          format: int64
+          default: 0
         totalPages:
           type: integer
-          format: int32
-        # This is required to comment out to prevent class mismatching with the subclasses.
+          default: 0
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        numberOfElements:
+          type: integer
+        size:
+          type: integer
+        empty:
+          type: boolean
 #        content:
 #          type: array
+#          items: {}
+    Sort:
+      type: object
+      format: sort
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      format: pageable
+      properties:
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
+
+#    # Reference:
+#    # https://medium.com/learning-from-jhipster/21-controller-service-repository的建立-2-pageable-sort-的使用與-swagger-的設定-f3dc2a1b772d
+#    # Custom Pageable is required to construct PageRequest object in spring, weird
+#    Pageable:
+#      type: object
+#      properties:
+#        page:
+#          type: integer
+#          description: pageNumber/page - zero-based page number, must not be negative.
+#        size:
+#          type: integer
+#        sort:
+#          type: array
 #          items:
-#            $ref: '#/components/schemas/BasePageModel'
+#            type: string
+#            default: field1,asc
+#    BasePageResult:
+#      type: object
+#      properties:
+#        totalElements:
+#          type: integer
+#          format: int32
+#        totalPages:
+#          type: integer
+#          format: int32
+#        # This is required to comment out to prevent class mismatching with the subclasses.
+##        content:
+##          type: array
+##          items:
+##            $ref: '#/components/schemas/BasePageModel'
     BasePageModel:
       discriminator:
         propertyName: pageModelType
